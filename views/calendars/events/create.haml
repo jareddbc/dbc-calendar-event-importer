@@ -1,0 +1,12 @@
+.centerbox.flexible
+  %h1
+    Importing event
+    .three-quarters-loader …
+
+
+:javascript
+
+  $.post(#{request.url.inspect}, #{params.to_json}, function(response){
+    console.log('response', response);
+    if (response && response.redirect) location.replace(response.redirect);
+  });

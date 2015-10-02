@@ -35,7 +35,10 @@ end
 
 error do |error|
   status 500
-  error.message
+  content_type :text
+  puts error.message
+  puts error.backtrace
+  "#{error.message}\n#{error.backtrace.join("\n")}"
 end
 
 get '/' do
@@ -76,12 +79,17 @@ get '/calendars/:id' do
 end
 
 post '/calendars/:id/events' do
-  @calendar = google_client.calendar(params[:id])
-  if url = params[:url]
-    @event = EventImporter.from_url(url) and \
-    @calendar.create_event(@event) and \
-    flash[:notice] = 'Event Imported' or \
-    flash[:error] = "Failed to Import Event from #{url.inspect}"
+  if request.xhr?
+    calendar = google_client.calendar(params[:id])
+    if url = params[:url]
+      event = EventImporter.from_url(url) and \
+      event = calendar.create_event(event) and \
+      flash[:notice] = "Imported Event: #{event.summary}" or \
+      flash[:error] = "Failed to Import Event from #{url.inspect}"
+    end
+    content_type :json
+    {redirect: to("/calendars/#{calendar.id}")}.to_json
+  else
+    haml :'calendars/events/create'
   end
-  redirect to("/calendars/#{@calendar.id}")
 end
