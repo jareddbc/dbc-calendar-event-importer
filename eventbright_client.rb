@@ -1,4 +1,4 @@
-module EventBrightClient
+module EventbrightClient
   TOKEN = ENV.fetch 'EVENT_BRIGHT_TOKEN'
 
   ENDPOINT = 'https://www.eventbriteapi.com/v3'
@@ -13,17 +13,11 @@ module EventBrightClient
 
   # https://www.eventbriteapi.com/v3/events/18896471856/?token=6HXSTR7DTRN7CXZJBIMU
   def self.event(id)
-    HTTParty.get url("/events/#{id}")
+    HTTParty.get(url("/events/#{id}")).parsed_response
   end
 
-  def self.from_url(url)
-    # http://www.eventbrite.com/e/pop-up-magazine-san-francisco-davies-symphony-hall-tickets-18198722870?aff=ebrowse
-    url = URI.parse(url)
-    if url.path =~ %r{^/e/.+-(\d+)$}
-      event($1)
-    else
-      raise "unable to determine event if from url: #{url}"
-    end
+  def self.venue(id)
+    HTTParty.get(url("/venues/#{id}")).parsed_response
   end
 
 end

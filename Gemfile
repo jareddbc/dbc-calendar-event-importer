@@ -14,4 +14,5 @@ gem 'google-api-client', '0.9.pre3'
 group :development do
   gem 'shotgun'
   gem 'pry-byebug'
+  gem 'rspec'
 end
