@@ -1,5 +1,4 @@
 require 'eventbright_client'
-require 'pp'
 
 # http://www.eventbrite.com/e/pop-up-magazine-san-francisco-davies-symphony-hall-tickets-18198722870?aff=ebrowse
 EventbrightImporter = -> (url) do

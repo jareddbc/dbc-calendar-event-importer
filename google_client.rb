@@ -91,14 +91,17 @@ class GoogleClient
       event.description = data['description']
       event.location    = data['location']
       event.start = EventDateTime.new(
-        date_time: DateTime.parse(data['start']['dateTime']),
+        date_time: DateTime.parse(data['start']['dateTime'].to_s),
         time_zone: data['start']['timeZone'],
       )
       event.end = EventDateTime.new(
-        date_time: DateTime.parse(data['end']['dateTime']),
+        date_time: DateTime.parse(data['end']['dateTime'].to_s),
         time_zone: data['end']['timeZone'],
       )
       @google_client.calendar_service.insert_event(@id, event, send_notifications: true)
+    rescue
+      binding.pry
+      raise
     end
 
   end

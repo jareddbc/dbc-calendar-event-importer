@@ -14,4 +14,7 @@ module EventImporter
   require 'importers/eventbright_importer'
   IMPORTERS << EventbrightImporter
 
+  require 'importers/meetup_importer'
+  IMPORTERS << MeetupImporter
+
 end
