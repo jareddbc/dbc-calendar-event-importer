@@ -1,0 +1,53 @@
+.layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto; }
+
+.columns, .rows {
+  display: -webkit-flex; }
+  .columns > *, .rows > * {
+    flex-grow: 0;
+    flex-shrink: 0; }
+
+.flexible {
+  flex-grow: 1;
+  flex-shrink: 1; }
+
+.columns {
+  flex-direction: row; }
+
+.rows {
+  flex-direction: column; }
+
+body > .page > * {
+  min-width: 400px; }
+
+.topbar {
+  background-color: #337ab7;
+  padding: 0.25em; }
+  .topbar, .topbar:hover, .topbar:focus, .topbar:active, .topbar *, .topbar *:hover, .topbar *:focus, .topbar *:active {
+    color: white; }
+
+.flash-messages > * {
+  margin: 0.5em 1em; }
+
+.calendar-controls {
+  padding: 0.5em;
+  background-color: #e3e9ff; }
+
+.calendar-iframe {
+  overflow: auto;
+  position: relative; }
+  .calendar-iframe > iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    min-width: 600px;
+    min-height: 600px; }
+
+/*# sourceMappingURL=app.css.map */

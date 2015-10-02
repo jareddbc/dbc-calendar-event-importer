@@ -1,7 +1,8 @@
 .calendar-controls
-  %a{href:""} Import Event
+  %form.columns.import-event-form{action:"/calendars/#{@calendar.id}/events", method:"post"}
+    %input.flexible{type:'text', name:'url', placeholder: 'http://www.eventbrite.com/e/golden-gate-half-24life-5k-registration-14030893781?aff=ebrowse'}
+    &nbsp;
+    %input.btn.btn-primary{type:'submit', value: 'Import Event'}
 
-  %form.import-event-form{action:"/calendars/#{@calendar.id}/events", method:"post"}
-    %input{type:'text', name:'url', placeholder: 'http://www.eventbrite.com/e/golden-gate-half-24life-5k-registration-14030893781?aff=ebrowse'}
-    %input{type:'submit', value: 'Import Event'}
-%iframe{src:@calendar.embed_url, style: 'flex-grow: 1', frameborder:"0", scrolling:"no"}\
+.calendar-iframe.flexible
+  %iframe{src:@calendar.embed_url, style: 'flex-grow: 1', frameborder:"0", scrolling:"no"}\
