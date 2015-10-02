@@ -1,0 +1,7 @@
+%h1 Calendars
+
+%ol
+  - @calendars.each do |calendar|
+    %li
+      %a{href:"/calendars/#{calendar.id}"}= calendar.summary
+      %p= calendar.description

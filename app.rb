@@ -1,23 +1,54 @@
 require File.expand_path('../environment', __FILE__)
 
 require 'calendar'
+require 'google_client'
 
-# require 'googleauth'
-# require 'google/apis/compute_v1'
+helpers do
 
-# compute = Google::Apis::ComputeV1::ComputeService.new
+  def oauth2callback_url
+    to('/oauth2callback')
+  end
 
-# # Get the environment configured authorization
-# scopes =  ['https://www.googleapis.com/auth/cloud-platform', 'https://www.googleapis.com/auth/compute']
-# compute.authorization = Google::Auth.get_application_default(scopes)
+  def google_client
+    @google_client ||= GoogleClient.new(
+      token: session[:google_access_token],
+      oauth2callback_url: oauth2callback_url,
+    )
+  end
+
+  def signed_in?
+    google_client.authorized?
+  end
+
+end
+
+get '/' do
+  if signed_in?
+    redirect to('/calendars')
+  else
+    haml :homepage
+  end
+end
 
 
-# result = client.execute(:api_method => service.calendars.get,
-#                         :parameters => {'calendarId' => 'primary'})
-# calendar = result.data
-# calendar.summary = "New Summary"
-# result = client.execute(:api_method => service.calendars.update,
-#                         :parameters => {'calendarId' => calendar.id},
-#                         :body_object => calendar,
-#                         :headers => {'Content-Type' => 'application/json'})
-# print result.data.etag
+get '/login-via-google' do
+  redirect google_client.authorization_uri
+end
+
+
+get '/oauth2callback' do
+  token = google_client.fetch_access_token(params['code'])
+  session[:google_access_token] = token.to_json
+  redirect to '/'
+end
+
+
+get '/calendars' do
+  @calendars = google_client.calendars
+  haml :'calendars/index'
+end
+
+get '/calendars/:id' do
+  @calendar = google_client.calendar(params[:id])
+  haml :'calendars/show'
+end
