@@ -82,6 +82,7 @@ post '/calendars/:id/events' do
   if request.xhr?
     calendar = google_client.calendar(params[:id])
     if url = params[:url]
+      url.strip!
       event = EventImporter.from_url(url) and \
       event = calendar.create_event(event) and \
       flash[:notice] = "Imported Event: #{event.summary}" or \
