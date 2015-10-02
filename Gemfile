@@ -15,4 +15,5 @@ group :development do
   gem 'shotgun'
   gem 'pry-byebug'
   gem 'rspec'
+  gem 'webmock'
 end

@@ -12,6 +12,8 @@ GEM
       columnize (= 0.9.0)
     coderay (1.1.0)
     columnize (0.9.0)
+    crack (0.4.2)
+      safe_yaml (~> 1.0.0)
     daemons (1.2.3)
     diff-lcs (1.2.5)
     dotenv (2.0.2)
@@ -83,6 +85,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.3.0)
     rspec-support (3.3.0)
+    safe_yaml (1.0.4)
     sass (3.4.18)
     shotgun (0.9.1)
       rack (>= 1.0)
@@ -107,6 +110,9 @@ GEM
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uber (0.0.15)
+    webmock (1.21.0)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
 
 PLATFORMS
   ruby
@@ -122,6 +128,7 @@ DEPENDENCIES
   shotgun
   sinatra
   thin
+  webmock
 
 BUNDLED WITH
    1.10.5

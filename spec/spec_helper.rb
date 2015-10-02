@@ -1,4 +1,5 @@
 require File.expand_path('../../environment', __FILE__)
+require 'webmock/rspec'
 
 RSpec.configure do |config|
   # config.expect_with :rspec do |expectations|
