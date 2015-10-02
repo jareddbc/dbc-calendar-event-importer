@@ -2,10 +2,11 @@ module EventImporter
 
   def self.from_url(url)
     url = URI.parse(url)
-    importers.each do |importer|
-      event = importer.try(url)
+    IMPORTERS.each do |importer|
+      event = importer.call(url)
       return event if event
     end
+    false
   end
 
   IMPORTERS = []
