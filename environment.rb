@@ -1,6 +1,5 @@
 require 'bundler/setup'
 Bundler.require
-require 'pry-byebug'
 $:.unshift File.expand_path('..', __FILE__)
 Dotenv.load
 
@@ -16,5 +15,6 @@ configure do
 end
 
 configure :development do
+  require 'pry-byebug'
   use Rack::Reloader
 end
