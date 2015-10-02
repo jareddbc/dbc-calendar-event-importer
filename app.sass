@@ -1,3 +1,5 @@
+$lightblue: #e3e9ff
+
 .layer
   position: fixed
   top: 0
@@ -41,7 +43,7 @@ body > .page > *
 
 .calendar-controls
   padding: 0.5em
-  background-color: #e3e9ff
+  background-color: $lightblue
 
 
 .calendar-iframe
@@ -55,3 +57,19 @@ body > .page > *
     height: 100%
     min-width: 600px
     min-height: 600px
+
+
+.calendar-list-item
+  padding: 0 1em
+  &:hover
+    background-color: $lightblue
+
+
+.padded-box
+  margin: 1em
+
+.centerbox
+  display: -webkit-flex
+  justify-content: center
+  align-items: center
+

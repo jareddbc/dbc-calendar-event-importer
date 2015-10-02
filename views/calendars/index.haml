@@ -1,7 +1,7 @@
-%h1 Calendars
+.padded-box
+  %h3 Choose a calendar
 
-%ol
-  - @calendars.each do |calendar|
-    %li
-      %a{href:"/calendars/#{calendar.id}"}= calendar.summary
-      %p= calendar.description
+  .rows
+    - @calendars.each do |calendar|
+      .rows.calendar-list-item
+        %a{href:calendar_path(calendar.id)}= calendar.summary

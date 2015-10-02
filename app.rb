@@ -21,6 +21,10 @@ helpers do
     google_client.authorized?
   end
 
+  def calendar_path(calendar_id)
+    "/calendars/#{Rack::Utils.escape(calendar_id)}"
+  end
+
 end
 
 
@@ -42,6 +46,11 @@ get '/' do
   end
 end
 
+
+get '/logout' do
+  session.clear
+  redirect to '/'
+end
 
 get '/login-via-google' do
   session.clear
