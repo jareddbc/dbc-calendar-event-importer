@@ -15,9 +15,10 @@ module MeetupClient
   # https://www.eventbriteapi.com/v3/events/18896471856/?token=6HXSTR7DTRN7CXZJBIMU
   def self.event(urlname, id)
     event = HTTParty.get(url("/#{urlname}/events/#{id}")).parsed_response
+    duration = (event['duration'] || 0) / 1000
     event['timeZone'] = timezone_for(event)
     event['start'] = datetime_for(event, 'time')
-    event['end'] = event['start'] + (event['duration']||0)
+    event['end'] = event['start'] + duration
     event
   end
 
