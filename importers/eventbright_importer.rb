@@ -4,7 +4,8 @@ require 'pp'
 # http://www.eventbrite.com/e/pop-up-magazine-san-francisco-davies-symphony-hall-tickets-18198722870?aff=ebrowse
 EventbrightImporter = -> (url) do
 
-  url.host.end_with?('eventbrite.com') or return false
+  url.host and \
+  url.host.end_with?('eventbrite.com') and \
   url.path =~ %r{^/e/.+-(\d+)$} or return false
   event_id = $1
 

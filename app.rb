@@ -2,6 +2,7 @@ require File.expand_path('../environment', __FILE__)
 
 require 'calendar'
 require 'google_client'
+require 'event_importer'
 
 helpers do
 
@@ -22,6 +23,17 @@ helpers do
 
 end
 
+
+error Google::Apis::AuthorizationError do |error|
+  status 401
+  haml :unauthorized
+end
+
+error do |error|
+  status 500
+  error.message
+end
+
 get '/' do
   if signed_in?
     redirect to('/calendars')
@@ -32,6 +44,7 @@ end
 
 
 get '/login-via-google' do
+  session.clear
   redirect google_client.authorization_uri
 end
 
@@ -55,7 +68,11 @@ end
 
 post '/calendars/:id/events' do
   @calendar = google_client.calendar(params[:id])
-  @event = @calendar.create_event_from_url(params[:url])
-  haml :'calendars/events/show'
-  # EventBrightClient.from_url('http://www.eventbrite.com/e/pop-up-magazine-san-francisco-davies-symphony-hall-tickets-18198722870?aff=ebrowse')
+  if url = params[:url]
+    @event = EventImporter.from_url(url) and \
+    @calendar.create_event(@event) and \
+    flash[:notice] = 'Event Imported' or \
+    flash[:error] = "Failed to Import Event from #{url.inspect}"
+  end
+  redirect to("/calendars/#{@calendar.id}")
 end

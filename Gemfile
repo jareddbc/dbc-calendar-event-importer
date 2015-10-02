@@ -6,6 +6,7 @@ gem 'haml'
 gem 'sass'
 gem 'thin'
 gem 'httparty'
+gem 'rack-flash3', require: 'rack/flash'
 
 gem 'google-api-client', '0.9.pre3'
 # gem 'google-api-client', :require => 'google/api_client'

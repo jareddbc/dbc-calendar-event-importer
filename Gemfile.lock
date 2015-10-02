@@ -67,6 +67,8 @@ GEM
       byebug (~> 5.0)
       pry (~> 0.10)
     rack (1.6.4)
+    rack-flash3 (1.0.5)
+      rack
     rack-protection (1.5.3)
       rack
     representable (2.3.0)
@@ -123,6 +125,7 @@ DEPENDENCIES
   haml
   httparty
   pry-byebug
+  rack-flash3
   rspec
   sass
   shotgun

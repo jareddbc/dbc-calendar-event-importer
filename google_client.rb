@@ -54,28 +54,51 @@ class GoogleClient
 
   def calendars
     calendar_service.list_calendar_lists.items.map do |item|
-      Calendar.new(item)
+      Calendar.new(self, item)
     end
   end
 
   def calendar(id)
-    Calendar.new calendar_service.get_calendar(id)
+    Calendar.new self, calendar_service.get_calendar(id)
   end
+
+
 
   class Calendar
 
+    Event = ::Google::Apis::CalendarV3::Event
+    EventDateTime = ::Google::Apis::CalendarV3::EventDateTime
+
     attr_reader :id, :summary, :description
 
-    def initialize(data)
-      @id = data.id
-      @summary = data.summary
-      @description = data.description
+    def initialize(google_client, calendar)
+      @google_client = google_client
+      @calendar = calendar
+      @id = calendar.id
+      @summary = calendar.summary
+      @description = calendar.description
     end
 
     def embed_url
       url = URI.parse('https://www.google.com/calendar/embed')
       url.query = Rack::Utils.build_query(src: @id)
       url.to_s
+    end
+
+    def create_event(data)
+      event = Event.new
+      event.summary     = data['summary']
+      event.description = data['description']
+      event.location    = data['location']
+      event.start = EventDateTime.new(
+        date_time: DateTime.parse(data['start']['dateTime']),
+        time_zone: data['start']['timeZone'],
+      )
+      event.end = EventDateTime.new(
+        date_time: DateTime.parse(data['end']['dateTime']),
+        time_zone: data['end']['timeZone'],
+      )
+      @google_client.calendar_service.insert_event(@id, event, send_notifications: true)
     end
 
   end
