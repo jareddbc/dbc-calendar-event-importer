@@ -5,7 +5,20 @@
     %link{rel:'stylesheet', href:'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'}
     %script{src:'https://code.jquery.com/jquery-2.1.4.min.js'}
     %script{src:'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'}
+    :sass
+      body > .page
+        position: fixed
+        top: 0
+        left: 0
+        bottom: 0
+        right: 0
+        overflow: auto
+        display: -webkit-flex
+        flex-direction: column
+
 
   %body
-    %h1 Calendar Event Importer
-    = yield
+    .page
+      .topbar
+        Dev Bootcamp Calendar Events Importer
+      = yield

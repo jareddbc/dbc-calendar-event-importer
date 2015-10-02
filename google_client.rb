@@ -53,11 +53,33 @@ class GoogleClient
   end
 
   def calendars
-    calendar_service.list_calendar_lists.items
+    calendar_service.list_calendar_lists.items.map do |item|
+      Calendar.new(item)
+    end
   end
 
   def calendar(id)
-    calendar_service.get_calendar(id)
+    Calendar.new calendar_service.get_calendar(id)
+  end
+
+  class Calendar
+
+    attr_reader :id, :summary, :description
+
+    def initialize(data)
+      @id = data.id
+      @summary = data.summary
+      @description = data.description
+    end
+
+    def embed_url
+      url = URI.parse('https://www.google.com/calendar/embed')
+      url.query = Rack::Utils.build_query(src: @id)
+      url.to_s
+    end
+
   end
 
 end
+
+

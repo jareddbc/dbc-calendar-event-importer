@@ -52,3 +52,10 @@ get '/calendars/:id' do
   @calendar = google_client.calendar(params[:id])
   haml :'calendars/show'
 end
+
+post '/calendars/:id/events' do
+  @calendar = google_client.calendar(params[:id])
+  @event = @calendar.create_event_from_url(params[:url])
+  haml :'calendars/events/show'
+  # EventBrightClient.from_url('http://www.eventbrite.com/e/pop-up-magazine-san-francisco-davies-symphony-hall-tickets-18198722870?aff=ebrowse')
+end
